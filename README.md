@@ -11,3 +11,4 @@
 - [x] 可以轉換筆記到對應的highlight
 - [ ] 支援macOS
 - [ ] 發佈Release
+- [ ] 能直接上傳到readwise
