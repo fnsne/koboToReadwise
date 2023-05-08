@@ -12,3 +12,4 @@
 - [ ] 支援macOS
 - [ ] 發佈Release
 - [ ] 能直接上傳到readwise
+- [ ] 能找到書藉圖片
