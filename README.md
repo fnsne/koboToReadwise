@@ -22,3 +22,8 @@
 - [ ] Add how to use
 - [ ] 能直接上傳到readwise
 - [ ] 能找到書藉圖片
+
+
+## 參考來源
+https://github.com/mollykannn/kobo-book-exporter-go/blob/main/models/bookList/bookList.go
+https://www.vixual.net/blog/archives/117
