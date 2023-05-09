@@ -79,7 +79,17 @@ func (b *Bookmark) Output() string {
 }
 
 func main() {
-	sqlPosition := path.Join("C://Users/watas/", "AppData", "Local", "Kobo", "Kobo Desktop Edition", "Kobo.sqlite")
+	var isMac, isWindows bool
+	//todo change to use flag or env
+	isMac = true
+	isWindows = false
+	var sqlPosition string
+	if isMac {
+		sqlPosition = path.Join("/Users/fnsne/Library/Application Support/", "Kobo", "Kobo Desktop Edition", "Kobo.sqlite")
+	} else if isWindows {
+		sqlPosition = path.Join("C://Users/watas/", "AppData", "Local", "Kobo", "Kobo Desktop Edition", "Kobo.sqlite")
+	}
+
 	fmt.Println("sqlPosition=", sqlPosition)
 	db, err := gorm.Open(sqlite.Open(sqlPosition), &gorm.Config{})
 	if err != nil {
@@ -109,15 +119,4 @@ func main() {
 		}
 	}
 	writer.Flush()
-	//for _, bookmark := range bookmarks {
-	//fmt.Println("BookTitle:", bookmark.Content.BookTitle)
-	//fmt.Println("text:", bookmark.Text)
-	//fmt.Println("annotation:", bookmark.Annotation)
-	//location := bookmark.Location()
-	//fmt.Println("location:", location)
-	//fmt.Println("DateCreated:", bookmark.DateCreated)
-	//fmt.Println("===================")
-	//fmt.Println(bookmark.Output())
-	//
-	//}
 }
