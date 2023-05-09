@@ -11,5 +11,6 @@
 - [x] 支援macOS
 - [x] 使用env來指定使用的系統
 - [ ] 發佈Release
+- [ ] Add how to use
 - [ ] 能直接上傳到readwise
 - [ ] 能找到書藉圖片
