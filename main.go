@@ -29,23 +29,23 @@ func main() {
 		panic(fmt.Errorf("cannot open gorm, error=%v", err))
 	}
 	puller := repos.NewBookmarkPuller(db)
-	bookList, err := puller.GetBookList()
-	if err != nil {
-		panic(fmt.Errorf("cannot get book list, error=%v", err))
-	}
-	for _, book := range bookList {
-		fmt.Printf("book title = %v\n", book.BookTitle)
-		fmt.Printf("author = %v\n", book.Author)
-		fmt.Printf("content id = %v\n", book.ContentID)
-		fmt.Printf("accessibility = %v\n", book.Accessibility)
-	}
-
-	//bookmarks, err := puller.GetBookmarkList()
-	//
-	//err = WriteKindleClippingFormat("output.txt", bookmarks)
+	//bookList, err := puller.GetBookList()
 	//if err != nil {
-	//	panic(fmt.Errorf("cannot write kindle clipping format, error=%v", err))
+	//	panic(fmt.Errorf("cannot get book list, error=%v", err))
 	//}
+	//for _, book := range bookList {
+	//	fmt.Printf("book title = %v\n", book.BookTitle)
+	//	fmt.Printf("author = %v\n", book.Author)
+	//	fmt.Printf("content id = %v\n", book.ContentID)
+	//	fmt.Printf("accessibility = %v\n", book.Accessibility)
+	//}
+
+	bookmarks, err := puller.GetBookmarkList()
+
+	err = WriteKindleClippingFormat("output.txt", bookmarks)
+	if err != nil {
+		panic(fmt.Errorf("cannot write kindle clipping format, error=%v", err))
+	}
 }
 
 func WriteKindleClippingFormat(outputFileName string, bookmarks []models.Bookmark) error {

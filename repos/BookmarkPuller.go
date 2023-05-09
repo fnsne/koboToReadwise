@@ -22,38 +22,24 @@ func (b *BookmarkPuller) GetBookmarkList() ([]models.Bookmark, error) {
 	if err != nil {
 		panic(fmt.Errorf("cannot get bookmarks, error=%v", err))
 	}
+
+	for i := 0; i < len(bookmarks); i++ {
+		bookmark := bookmarks[i]
+		book, err := b.GetBookByContentID(bookmark.ContentID)
+		if err != nil {
+			return nil, fmt.Errorf("cannot get book by content id, error=%v", err)
+		}
+		bookmarks[i].Book = book
+	}
+
 	sort.Slice(bookmarks, func(i, j int) bool {
 		return bookmarks[i].Content.Title > bookmarks[j].Content.Title
 	})
 	return bookmarks, err
 }
 
-type Book struct {
-	ContentID     string `gorm:"primaryKey;column:ContentID"`
-	BookTitle     string `gorm:"column:Title"`
-	IsPurchasable bool   `gorm:"column:IsPurchasable"`
-	Accessibility int    `gorm:"column:Accessibility"`
-	Author        string `gorm:"column:Attribution"`
-	//SubTitle     string
-	//Author       string
-	//Publisher    string
-	//ISBN         string
-	//ReleaseDate  string
-	//Series       string
-	//SeriesNumber int
-	//Rating       int
-	//ReadPercent  int
-	//LastRead     string
-	//FileSize     int
-	//Source       string
-}
-
-func (b *Book) TableName() string {
-	return "content"
-}
-
-func (b *BookmarkPuller) GetBookList() ([]Book, error) {
-	var books []Book
+func (b *BookmarkPuller) GetBookList() ([]models.Book, error) {
+	var books []models.Book
 	err := b.db.
 		Where("ContentType=?", 6).
 		Where("___UserID is not null").
@@ -66,4 +52,11 @@ func (b *BookmarkPuller) GetBookList() ([]Book, error) {
 		books[i].Author = strings.Split(book.Author, ",")[0]
 	}
 	return books, err
+}
+
+func (b *BookmarkPuller) GetBookByContentID(contentID string) (models.Book, error) {
+	actualContentID := strings.Split(contentID, "!")[0]
+	var book models.Book
+	err := b.db.Where("ContentID=?", actualContentID).Find(&book).Error
+	return book, err
 }

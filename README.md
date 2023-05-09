@@ -5,11 +5,11 @@
  
 ## Todos
 - [x] 可以轉換出用於[Readwise](https://readwise.io/welcome/sync)的Kindle MyClipping.txt 所需的格式。
-- [ ] 可以查到作者名字
-- [x] 暫時使用`From koboToReadwise Tool` 為作者名字
+- [x] 可以查到作者名字
 - [x] 可以轉換highlights
 - [x] 可以轉換筆記到對應的highlight
-- [ ] 支援macOS
+- [x] 支援macOS
+- [ ] 使用env來指定使用的系統
 - [ ] 發佈Release
 - [ ] 能直接上傳到readwise
 - [ ] 能找到書藉圖片
