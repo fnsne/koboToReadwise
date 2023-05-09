@@ -18,7 +18,7 @@ func NewBookmarkPuller(db *gorm.DB) BookmarkPuller {
 
 func (b *BookmarkPuller) GetBookmarkList() ([]models.Bookmark, error) {
 	var bookmarks []models.Bookmark
-	err := b.db.Preload("Content").Find(&bookmarks).Error
+	err := b.db.Find(&bookmarks).Error
 	if err != nil {
 		panic(fmt.Errorf("cannot get bookmarks, error=%v", err))
 	}
@@ -33,7 +33,7 @@ func (b *BookmarkPuller) GetBookmarkList() ([]models.Bookmark, error) {
 	}
 
 	sort.Slice(bookmarks, func(i, j int) bool {
-		return bookmarks[i].Content.Title > bookmarks[j].Content.Title
+		return bookmarks[i].Book.BookTitle > bookmarks[j].Book.BookTitle
 	})
 	return bookmarks, err
 }

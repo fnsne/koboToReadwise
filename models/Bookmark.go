@@ -13,7 +13,6 @@ type Bookmark struct {
 	ChapterProgress float64
 	Annotation      string
 	ContentID       string
-	Content         Content
 	DateCreated     string `gorm:"column:DateCreated"`
 	Book            Book   `gorm:"-"`
 }
@@ -39,18 +38,14 @@ func (b *Bookmark) CreateTime() time.Time {
 	return t
 }
 
-func (b *Bookmark) HighLight() string {
-	return b.Text
-}
-
 func (b *Bookmark) Output() string {
 	var str string
 	str += fmt.Sprintf("%s (%s)\n", b.BookTitle(), b.Author())
 	str += fmt.Sprintf("- Your Highlight on Location %.0f | Added on %s", b.Location(), b.CreateTime().Format("Monday, January 2, 2006 15:04:05 PM"))
-	str += fmt.Sprintf("\n\n%s", b.HighLight())
+	str += fmt.Sprintf("\n\n%s", b.Text)
 	str += fmt.Sprintf("\n==========")
 
-	if b.Annotation != "" {
+	if b.hasNote() {
 		str += fmt.Sprintf("\n%s (%s)\n", b.BookTitle(), b.Author())
 		str += fmt.Sprintf("- Your Note on Location %.0f | Added on %s", b.Location(), b.CreateTime().Format("Monday, January 2, 2006 15:04:05 PM"))
 		str += fmt.Sprintf("\n\n%s", b.Annotation)
@@ -58,6 +53,11 @@ func (b *Bookmark) Output() string {
 	}
 
 	return str
+}
+
+func (b *Bookmark) hasNote() bool {
+	hasNote := b.Annotation != ""
+	return hasNote
 }
 
 func (b *Bookmark) BookTitle() string {
