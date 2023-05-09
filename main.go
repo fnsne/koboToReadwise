@@ -8,7 +8,6 @@ import (
 	"gorm.io/gorm"
 	"koboToReadwise/models"
 	"koboToReadwise/repos"
-	"log"
 	"os"
 	"path"
 )
@@ -56,14 +55,14 @@ type Env struct {
 func GetEnvs() (Env, error) {
 	err := godotenv.Load()
 	if err != nil {
-		log.Fatal("Error loading .env file")
+		fmt.Printf("Error loading .env file, error=%v", err)
 	}
 
 	env := Env{
 		OS:      os.Getenv("OS"),
 		Homedir: os.Getenv("HOME"),
 	}
-	return env, err
+	return env, nil
 }
 
 func WriteKindleClippingFormat(outputFileName string, bookmarks []models.Bookmark) error {
