@@ -9,7 +9,7 @@
 - [x] 可以轉換highlights
 - [x] 可以轉換筆記到對應的highlight
 - [x] 支援macOS
-- [ ] 使用env來指定使用的系統
+- [x] 使用env來指定使用的系統
 - [ ] 發佈Release
 - [ ] 能直接上傳到readwise
 - [ ] 能找到書藉圖片

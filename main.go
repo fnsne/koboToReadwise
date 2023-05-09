@@ -3,24 +3,35 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"github.com/joho/godotenv"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 	"koboToReadwise/models"
 	"koboToReadwise/repos"
+	"log"
 	"os"
 	"path"
 )
 
+const (
+	mac     = "1"
+	windows = "2"
+)
+
 func main() {
-	var isMac, isWindows bool
-	//todo change to use flag or env
-	isMac = true
-	isWindows = false
+	env, err := GetEnvs()
+	if err != nil {
+		panic(fmt.Errorf("cannot get envs, error=%v", err))
+	}
+
 	var sqlPosition string
-	if isMac {
-		sqlPosition = path.Join("/Users/fnsne/Library/Application Support/", "Kobo", "Kobo Desktop Edition", "Kobo.sqlite")
-	} else if isWindows {
-		sqlPosition = path.Join("C://Users/watas/", "AppData", "Local", "Kobo", "Kobo Desktop Edition", "Kobo.sqlite")
+	switch env.OS {
+	case mac:
+		sqlPosition = path.Join(env.Homedir, "Library/Application Support/", "Kobo", "Kobo Desktop Edition", "Kobo.sqlite")
+	case windows:
+		sqlPosition = path.Join(env.Homedir, "AppData", "Local", "Kobo", "Kobo Desktop Edition", "Kobo.sqlite")
+	default:
+		panic(fmt.Errorf("wrong os, os=%v", env.OS))
 	}
 
 	fmt.Println("kobo.sqlite position = ", sqlPosition)
@@ -35,6 +46,24 @@ func main() {
 	if err != nil {
 		panic(fmt.Errorf("cannot write kindle clipping format, error=%v", err))
 	}
+}
+
+type Env struct {
+	OS      string
+	Homedir string
+}
+
+func GetEnvs() (Env, error) {
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+
+	env := Env{
+		OS:      os.Getenv("OS"),
+		Homedir: os.Getenv("HOME"),
+	}
+	return env, err
 }
 
 func WriteKindleClippingFormat(outputFileName string, bookmarks []models.Bookmark) error {
