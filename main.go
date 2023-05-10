@@ -58,9 +58,17 @@ func GetEnvs() (Env, error) {
 		fmt.Printf("Error loading .env file, error=%v", err)
 	}
 
+	osCode := os.Getenv("OSCODE")
+	var homeDir string
+	switch osCode {
+	case mac:
+		homeDir = os.Getenv("HOME")
+	case windows:
+		homeDir = os.Getenv("USERPROFILE")
+	}
 	env := Env{
-		OS:      os.Getenv("OS"),
-		Homedir: os.Getenv("HOME"),
+		OS:      osCode,
+		Homedir: homeDir,
 	}
 	return env, nil
 }
