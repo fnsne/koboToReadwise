@@ -3,7 +3,6 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"github.com/joho/godotenv"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 	"koboToReadwise/models"
@@ -13,24 +12,26 @@ import (
 )
 
 const (
-	mac     = "1"
-	windows = "2"
+	mac     = "mac"
+	windows = "windows"
 )
 
+var OS string
+
 func main() {
-	env, err := GetEnvs()
+	env, err := GetEnvs(OS)
 	if err != nil {
 		panic(fmt.Errorf("cannot get envs, error=%v", err))
 	}
 
 	var sqlPosition string
-	switch env.OS {
+	switch OS {
 	case mac:
 		sqlPosition = path.Join(env.Homedir, "Library/Application Support/", "Kobo", "Kobo Desktop Edition", "Kobo.sqlite")
 	case windows:
 		sqlPosition = path.Join(env.Homedir, "AppData", "Local", "Kobo", "Kobo Desktop Edition", "Kobo.sqlite")
 	default:
-		panic(fmt.Errorf("wrong os, os=%v", env.OS))
+		panic(fmt.Errorf("wrong os, os=%v", OS))
 	}
 
 	fmt.Println("kobo.sqlite position = ", sqlPosition)
@@ -48,17 +49,10 @@ func main() {
 }
 
 type Env struct {
-	OS      string
 	Homedir string
 }
 
-func GetEnvs() (Env, error) {
-	err := godotenv.Load()
-	if err != nil {
-		fmt.Printf("Error loading .env file, error=%v", err)
-	}
-
-	osCode := os.Getenv("OSCODE")
+func GetEnvs(osCode string) (Env, error) {
 	var homeDir string
 	switch osCode {
 	case mac:
@@ -67,7 +61,6 @@ func GetEnvs() (Env, error) {
 		homeDir = os.Getenv("USERPROFILE")
 	}
 	env := Env{
-		OS:      osCode,
 		Homedir: homeDir,
 	}
 	return env, nil
