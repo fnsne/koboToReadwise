@@ -5,12 +5,7 @@
  
 # How to use
 1. 下載[tool](）
-2. 在執行檔的位置，建立一個`.env`的檔案
-   ```
-      OS=1
-   ```
-   - OS=1: macOS, OS=2: Windows
-3. 執行tool，就會在同層的資料夾看到`output.txt`檔案，裡面就是轉換成kindle clipping的格式。
+2. 執行tool，就會在同層的資料夾看到`output.txt`檔案，裡面就是轉換成kindle clipping的格式。
 ## Todos
 - [x] 可以轉換出用於[Readwise](https://readwise.io/welcome/sync)的Kindle MyClipping.txt 所需的格式。
 - [x] 可以查到作者名字
@@ -21,7 +16,7 @@
 - [ ] 發佈Release
 - [ ] Add how to use
 - [ ] 能直接上傳到readwise
-- [ ] 能找到書藉圖片
+- [ ] 能上傳書藉封面
 
 
 ## 參考來源
