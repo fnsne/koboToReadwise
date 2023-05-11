@@ -3,7 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"gorm.io/driver/sqlite"
+	"github.com/glebarez/sqlite"
 	"gorm.io/gorm"
 	"koboToReadwise/models"
 	"koboToReadwise/repos"
