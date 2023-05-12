@@ -1,4 +1,7 @@
 # koboToReadwise
+
+> 這個專案是在不知道為何，Readwise的同步功能出現問題是寫的。不過現在Readwise修好了，所以暫時不再加新東西了。（2023-05-12）
+
  使用Kobo APP的預設位置：`%userpath%/AppData/Local/Kobo/Kobo Desktop Edition/` 裡面的`Kobo.sqlite` 來解析
  最終輸出Amazon Kindle的註記格式檔案：`output.txt` 。
  可以在[Readwise](https://readwise.io/welcome/sync)使用`My Clippings.txt`方式來import highlight和notes
